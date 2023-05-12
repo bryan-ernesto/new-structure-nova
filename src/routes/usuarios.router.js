@@ -322,6 +322,50 @@ router.post('/Get_Documento_GrupoAsignacionAplicativo', async (req, res) => {
   }
 });
 
+router.post('/Post_Socumento_Usuarioasignacionpuesto', async (req, res) => {
+  try {
+    const {
+      int_id_cat_usuario,
+      int_id_det_puesto_asignacion_equipo,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_grupoasignacionaplicativo($1,$2,$3)', [int_id_cat_usuario, int_id_det_puesto_asignacion_equipo, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Documento_Usuarioasignacionpuesto', async (req, res) => {
+  try {
+    const {
+      int_id_det_usuario_asignacion_puesto,
+      int_id_cat_usuario,
+      int_id_det_puesto_asignacion_equipo,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_grupoasignacionaplicativo($1,$2,$3,$4,$5)', [int_id_det_usuario_asignacion_puesto, int_id_cat_usuario, int_id_det_puesto_asignacion_equipo, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Documento_Usuarioasignacionpuesto', async (req, res) => {
+  try {
+    const {
+      str_nombre_departamento,
+      str_nombre_empresa,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_usuarioasignacionpuesto($1,$2,$3)', [str_nombre_departamento, str_nombre_empresa, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
 module.exports = {
   router,
 };

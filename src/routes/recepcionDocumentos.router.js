@@ -73,8 +73,9 @@ router.post('/Post_Documento_Solicitud', async (req, res) => {
       int_id_cat_empresa,
       int_id_creador,
       int_id_adjunto_sharepoint,
+      int_cantidad_documentos,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_solicitud($1,$2,$3,$4,$5,$6,$7)', [int_individual_masiva, int_id_cat_documento_estado, int_id_cat_documento_tipo, int_id_cat_usuario_autorizador, int_id_cat_empresa, int_id_creador, int_id_adjunto_sharepoint]);
+    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_solicitud($1,$2,$3,$4,$5,$6,$7,$8)', [int_individual_masiva, int_id_cat_documento_estado, int_id_cat_documento_tipo, int_id_cat_usuario_autorizador, int_id_cat_empresa, int_id_creador, int_id_adjunto_sharepoint, int_cantidad_documentos]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
@@ -558,13 +559,14 @@ router.post('/Get_Documento_Delta', async (req, res) => {
 router.post('/Get_Documento_SolicitudDetalleEmpresa', async (req, res) => {
   try {
     const {
+      int_id_solicitud,
       int_id_empresa,
       int_dte,
       str_nombre_empresa,
       int_id_estado,
       int_estado,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.get_documento_solicituddetalleempresa($1,$2,$3,$4,$5)', [int_id_empresa, int_dte, str_nombre_empresa, int_id_estado, int_estado]);
+    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.get_documento_solicituddetalleempresa($1,$2,$3,$4,$5,$6)', [int_id_solicitud, int_id_empresa, int_dte, str_nombre_empresa, int_id_estado, int_estado]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
