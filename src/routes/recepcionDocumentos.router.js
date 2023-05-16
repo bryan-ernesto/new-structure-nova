@@ -282,7 +282,7 @@ router.post('/Post_Documento_Sat', async (req, res) => {
       int_id_cat_documento_estado,
       int_id_cat_empresa,
       int_dte,
-      int_nit,
+      str_nit,
       str_proveedor,
       numeric_monto,
       date_fecha_emision,
@@ -299,7 +299,7 @@ router.post('/Post_Documento_Sat', async (req, res) => {
       int_codigo_proveedor,
       str_nombre_proveedor,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_sat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [int_id_cat_documento_tipo, int_id_cat_documento_estado, int_id_cat_empresa, int_dte, int_nit, str_proveedor, numeric_monto, date_fecha_emision, int_id_cat_moneda, str_descripcion, int_id_cat_pais, int_estado_anulado, int_id_creador, int_cantidad, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor]);
+    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_sat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [int_id_cat_documento_tipo, int_id_cat_documento_estado, int_id_cat_empresa, int_dte, str_nit, str_proveedor, numeric_monto, date_fecha_emision, int_id_cat_moneda, str_descripcion, int_id_cat_pais, int_estado_anulado, int_id_creador, int_cantidad, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
