@@ -4,9 +4,13 @@ const { getConnGroupNova } = require('../db/config');
 const router = express.Router();
 
 router.post('/PostCuentaClasificacion', async (req, res) => {
-  const { nombre, creado_por } = req.body;
-  await getConnGroupNova.query('CALL compras_cuenta.sp_tbl_cat_cuenta_clasificacion_add($1,$2);', [nombre, creado_por]);
-  res.send('Cuenta clasificacion agregada correctamente');
+  try {
+    const { nombre, creado_por } = req.body;
+    await getConnGroupNova.query('CALL compras_cuenta.sp_tbl_cat_cuenta_clasificacion_add($1,$2);', [nombre, creado_por]);
+    res.send('Cuenta clasificacion agregada correctamente');
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
 });
 
 router.post('/GetCuentaClasificacion', async (req, res) => {
