@@ -35,6 +35,23 @@ router.put('/Put_Compras_CuentaBancaria', async (req, res) => {
   }
 });
 
+router.post('/Get_Compras_CuentaBancaria', async (req, res) => {
+  try {
+    const {
+      int_id_cat_cuenta_bancaria,
+      int_id_cat_empresa,
+      str_nombre_empresa,
+      str_nombre_cuenta,
+      str_nit,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM compras_cuenta_bancaria.get_compras_cuentabancaria($1,$2,$3,$4,$5,$6)', [int_id_cat_cuenta_bancaria, int_id_cat_empresa, str_nombre_empresa, str_nombre_cuenta, str_nit, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
 module.exports = {
   router,
 };

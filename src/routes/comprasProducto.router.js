@@ -143,6 +143,19 @@ router.post('/Get_Compras_ProductoCategoria', async (req, res) => {
   }
 });
 
+router.post('/Get_Compras_ProductoUnidadMedida', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM compras_producto.get_compras_productounidadmedida($1,$2)', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
 module.exports = {
   router,
 };
