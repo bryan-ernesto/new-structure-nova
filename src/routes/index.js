@@ -16,6 +16,7 @@ const { router: comprasSolicitudRouter } = require('./comprasSolicitud.router');
 const { router: comprasCuentaBancariaRouter } = require('./comprasCuentaBancaria.router');
 const { router: comprasRecepcionRouter } = require('./comprasRecepcion.router');
 const { router: comprasOrdenCompraRouter } = require('./comprasOrdenCompra.router');
+const { router: cronogramaPagosRouter } = require('./cronogramaPagos.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -37,6 +38,7 @@ function routerApi(app) {
   router.use('/compras_cuenta_bancaria', comprasCuentaBancariaRouter);
   router.use('/compras_recepcion', comprasRecepcionRouter);
   router.use('/compras_orden_compra', comprasOrdenCompraRouter);
+  router.use('/cronograma_pagos', cronogramaPagosRouter);
 }
 
 module.exports = { routerApi };
