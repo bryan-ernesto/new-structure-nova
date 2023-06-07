@@ -18,8 +18,9 @@ router.post('/Post_Usuario', async (req, res) => {
       int_tipo_usuario,
       int_id_cat_usuario_categoria,
       str_username,
+      int_responsable,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM usuarios.add_usuario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)', [str_nombre, str_id_ad, str_correo, int_creado_por, str_user_principal_name, bit_apagado_automatico, int_telefono, int_codigo_pais, int_id_cat_usuario_dominio, int_tipo_usuario, int_id_cat_usuario_categoria, str_username]);
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.add_usuario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [str_nombre, str_id_ad, str_correo, int_creado_por, str_user_principal_name, bit_apagado_automatico, int_telefono, int_codigo_pais, int_id_cat_usuario_dominio, int_tipo_usuario, int_id_cat_usuario_categoria, str_username, int_responsable]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
@@ -263,13 +264,15 @@ router.post('/Get_Documento_UsuarioAsignacionPermiso', async (req, res) => {
     const {
       int_id_usuario,
       int_permiso,
+      int_id_aplicativo,
+      str_nombre_aplicativo,
       str_nombre_usuario,
       str_nombre_empresa,
       str_nombre_equipo,
       str_nombre_departamento,
       int_estado,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_usuarioasignacionpermiso($1,$2,$3,$4,$5,$6,$7)', [int_id_usuario, int_permiso, str_nombre_usuario, str_nombre_empresa, str_nombre_equipo, str_nombre_departamento, int_estado]);
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_usuarioasignacionpermiso($1,$2,$3,$4,$5,$6,$7,$8,$9)', [int_id_usuario, int_permiso, int_id_aplicativo, str_nombre_aplicativo, str_nombre_usuario, str_nombre_empresa, str_nombre_equipo, str_nombre_departamento, int_estado]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
@@ -430,6 +433,117 @@ router.post('/Post_Puesto', async (req, res) => {
       int_id_creador,
     } = req.body;
     const response = await getConnGroupNova.query('SELECT * FROM usuarios.post_puesto($1,$2)', [str_nombre, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Usuario_Dominio', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_id_creador,
+      int_id_responsable,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.post_usuario_dominio($1,$2,$3)', [str_nombre, int_id_creador, int_id_responsable]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Put_Usuario_Dominio', async (req, res) => {
+  try {
+    const {
+      int_id_cat_usuario_dominio,
+      str_nombre,
+      int_id_responsable,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.put_usuario_dominio($1,$2,$3,$4,$5)', [int_id_cat_usuario_dominio, str_nombre, int_id_responsable, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Usuario_Dominio', async (req, res) => {
+  try {
+    const {
+      str_nombre_dominio,
+      int_id_responsable,
+      str_nombre_responsable,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_usuario_dominio($1,$2,$3,$4)', [str_nombre_dominio, int_id_responsable, str_nombre_responsable, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Usuario_Categoria', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.post_usuario_categoria($1,$2)', [str_nombre, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Usuario_Categoria', async (req, res) => {
+  try {
+    const {
+      int_id_cat_usuario_categoria,
+      str_nombre,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.put_usuario_categoria($1,$2,$3,$4)', [int_id_cat_usuario_categoria, str_nombre, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Usuario_Categoria', async (req, res) => {
+  try {
+    const {
+      str_nombre_categoria,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_usuario_categoria($1,$2)', [str_nombre_categoria, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Usuario', async (req, res) => {
+  try {
+    const {
+      int_id_cat_usuario,
+      str_nombre,
+      str_id_ad,
+      str_correo,
+      str_user_principal_name,
+      int_telefono,
+      int_codigo_pais,
+      int_id_cat_usuario_dominio,
+      int_tipo_usuario,
+      int_id_cat_usuario_categoria,
+      str_username,
+      int_responsable,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT usuarios.put_usuario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [int_id_cat_usuario, str_nombre, str_id_ad, str_correo, str_user_principal_name, int_telefono, int_codigo_pais, int_id_cat_usuario_dominio, int_tipo_usuario, int_id_cat_usuario_categoria, str_username, int_responsable, int_estado, int_actualizado_por]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });

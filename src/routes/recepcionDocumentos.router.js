@@ -425,12 +425,14 @@ router.post('/Get_Documento_Estado', async (req, res) => {
 router.post('/Get_Documento_GrupoPermisos', async (req, res) => {
   try {
     const {
+      int_id_aplicativo,
+      str_nombre_aplicativo,
       str_nombre_grupo,
       str_nombre_nivel,
       str_descripcion_nivel,
       int_estado,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_grupopermisos($1,$2,$3,$4)', [str_nombre_grupo, str_nombre_nivel, str_descripcion_nivel, int_estado]);
+    const response = await getConnGroupNova.query('SELECT * FROM usuarios.get_documento_grupopermisos($1,$2,$3,$4,$5,$6)', [int_id_aplicativo, str_nombre_aplicativo, str_nombre_grupo, str_nombre_nivel, str_descripcion_nivel, int_estado]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });

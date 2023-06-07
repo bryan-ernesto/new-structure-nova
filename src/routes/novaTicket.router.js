@@ -101,6 +101,496 @@ router.post('/Get_ticket_por_usuario', async (req, res) => {
   }
 });
 
+router.post('/Post_Ticket_Tipo', async (req, res) => {
+  try {
+    const { str_nombre, int_creado_por } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_tipo($1,$2);', [str_nombre, int_creado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Tipo', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_tipo,
+      str_nombre,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_tipo($1,$2,$3,$4);', [int_id_cat_ticket_tipo, str_nombre, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Tipo', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_tipo($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_Prioridad', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_prioridad($1,$2);', [str_nombre, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Prioridad', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_prioridad,
+      str_nombre,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_prioridad($1,$2);', [int_id_cat_ticket_prioridad, str_nombre, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_DetalleAccion', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_id_cat_ticket_accion,
+      str_antes,
+      str_despues,
+      str_campo,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_detalleaccion($1,$2,$3,$4,$5,$6,$7);', [int_id_bit_ticket, int_id_cat_usuario, int_id_cat_ticket_accion, str_antes, str_despues, str_campo, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_DetalleAccion', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket_detalle_accion,
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_id_cat_ticket_accion,
+      str_antes,
+      str_despues,
+      str_campo,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_detalleaccion($1,$2,$3,$4,$5,$6,$7,$8,$9);', [int_id_bit_ticket_detalle_accion, int_id_bit_ticket, int_id_cat_usuario, int_id_cat_ticket_accion, str_antes, str_despues, str_campo, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Primario', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket,
+      int_id_cat_ticket_tipo,
+      str_referencia,
+      str_resumen,
+      str_descripcion,
+      int_id_cat_equipo,
+      int_id_cat_ticket_estado_proceso,
+      int_id_cat_ticket_estado_resolucion,
+      str_referencia_ticket_padre,
+      str_fecha_asignacion,
+      str_fecha_resolucion,
+      str_fecha_ultima_vista,
+      str_fecha_primera_respuesta,
+      str_fecha_vencimiento,
+      int_usuario_responsable,
+      int_usuario_solicitante,
+      int_id_cat_proceso,
+      int_id_cat_ticket_canal,
+      int_id_cat_ticket_prioridad,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_detalleaccion($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21);', [int_id_bit_ticket, int_id_cat_ticket_tipo, str_referencia, str_resumen, str_descripcion, int_id_cat_equipo, int_id_cat_ticket_estado_proceso, int_id_cat_ticket_estado_resolucion, str_referencia_ticket_padre, str_fecha_asignacion, str_fecha_resolucion, str_fecha_ultima_vista, str_fecha_primera_respuesta, str_fecha_vencimiento, int_usuario_responsable, int_usuario_solicitante, int_id_cat_proceso, int_id_cat_ticket_canal, int_id_cat_ticket_prioridad, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_DetalleComentario', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      str_descripcion,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_detallecomentario($1,$2,$3,$4);', [int_id_bit_ticket, int_id_cat_usuario, str_descripcion, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_DetalleComentario', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket_detalle_comentario,
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      str_descripcion,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_detallecomentario($1,$2,$3,$4,$5,$6);', [int_id_bit_ticket_detalle_comentario, int_id_bit_ticket, int_id_cat_usuario, str_descripcion, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_Seguimiento', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_seguimiento($1,$2,$3);', [int_id_bit_ticket, int_id_cat_usuario, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Seguimiento', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket_seguimiento,
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_seguimiento($1,$2,$3,$4,$5);', [int_id_bit_ticket_seguimiento, int_id_bit_ticket, int_id_cat_usuario, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_Vista', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_vista($1,$2,$3);', [int_id_bit_ticket, int_id_cat_usuario, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Vista', async (req, res) => {
+  try {
+    const {
+      int_id_bit_ticket_vista,
+      int_id_bit_ticket,
+      int_id_cat_usuario,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_vista($1,$2,$3,$4,$5);', [int_id_bit_ticket_vista, int_id_bit_ticket, int_id_cat_usuario, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_EstadoResolucion', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_estadoresolucion($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Canal', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_canal($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Prioridad', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_prioridad($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Proceso', async (req, res) => {
+  try {
+    const {
+      str_nombre_proceso,
+      int_id_equipo,
+      str_nombre_equipo,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_proceso_tarea.get_proceso($1,$2,$3,$4);', [str_nombre_proceso, int_id_equipo, str_nombre_equipo, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_EstadoProceso', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_estadoproceso($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_DetalleAccion', async (req, res) => {
+  try {
+    const {
+      int_id_ticket,
+      str_referencia,
+      int_id_usuario,
+      str_nombre_usuario,
+      int_id_accion,
+      str_nombre_accion,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_detalleaccion($1,$2,$3,$4,$5,$6,$7);', [int_id_ticket, str_referencia, int_id_usuario, str_nombre_usuario, int_id_accion, str_nombre_accion, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_DetalleComentario', async (req, res) => {
+  try {
+    const {
+      int_id_ticket,
+      str_referencia,
+      int_id_usuario,
+      str_nombre_usuario,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_detallecomentario($1,$2,$3,$4,$5);', [int_id_ticket, str_referencia, int_id_usuario, str_nombre_usuario, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Seguimiento', async (req, res) => {
+  try {
+    const {
+      int_id_ticket,
+      str_referencia,
+      int_id_usuario,
+      str_nombre_usuario,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_seguimiento($1,$2,$3,$4,$5);', [int_id_ticket, str_referencia, int_id_usuario, str_nombre_usuario, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Vista', async (req, res) => {
+  try {
+    const {
+      int_id_ticket,
+      str_referencia,
+      int_id_usuario,
+      str_nombre_usuario,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_vista($1,$2,$3,$4,$5);', [int_id_ticket, str_referencia, int_id_usuario, str_nombre_usuario, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Get_Ticket_Accion', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_estado,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.get_ticket_accion($1,$2);', [str_nombre, int_estado]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_EstadoResolucion', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      str_descripcion,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_estado_resolucion($1,$2,$3);', [str_nombre, str_descripcion, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_EstadoResolucion', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_estado_resolucion,
+      str_nombre,
+      str_descripcion,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_estadoresolucion($1,$2,$3,$4,$5);', [int_id_cat_ticket_estado_resolucion, str_nombre, str_descripcion, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_Canal', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_canal($1,$2);', [str_nombre, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_Canal', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_canal,
+      str_nombre,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_canal($1,$2,$3,$4);', [int_id_cat_ticket_canal, str_nombre, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_EstadoProceso', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      str_descripcion,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_estadoproceso($1,$2,$3);', [str_nombre, str_descripcion, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Ticket_EstadoProceso', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_estado_proceso,
+      str_nombre,
+      str_descripcion,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_estadoproceso($1,$2,$3,$4,$5);', [int_id_cat_ticket_estado_proceso, str_nombre, str_descripcion, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Post_Ticket_Accion', async (req, res) => {
+  try {
+    const {
+      str_nombre,
+      int_id_creador,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.post_ticket_accion($1,$2);', [str_nombre, int_id_creador]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.post('/Put_Ticket_Accion', async (req, res) => {
+  try {
+    const {
+      int_id_cat_ticket_accion,
+      str_nombre,
+      int_estado,
+      int_actualizado_por,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_accion($1,$2,$3,$4);', [int_id_cat_ticket_accion, str_nombre, int_estado, int_actualizado_por]);
+    res.status(200).json(response.rows);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
 module.exports = {
   router,
 };
