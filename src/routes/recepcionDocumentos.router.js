@@ -298,8 +298,28 @@ router.post('/Post_Documento_Sat', async (req, res) => {
       str_nombre_cuenta_sugerida,
       int_codigo_proveedor,
       str_nombre_proveedor,
+      str_numero_autorizacion,
+      str_tipo_dte,
+      str_serie,
+      int_codigo_establecimiento,
+      str_nit_certificador,
+      str_nombre_certificador,
+      date_fecha_anulacion,
+      numeric_iva,
+      numeric_petroleo,
+      numeric_turismo_hospedaje,
+      numeric_turismo_pasajes,
+      numeric_timbre_prensa,
+      numeric_bomberos,
+      numeric_tasa_municipal,
+      numeric_bebidas_alcoholicas,
+      numeric_tabaco,
+      numeric_cemento,
+      numeric_bebidas_no_alcoholicas,
+      numeric_tarifa_portuaria,
+      str_importacion_local,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_sat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)', [int_id_cat_documento_tipo, int_id_cat_documento_estado, int_id_cat_empresa, int_dte, str_nit, str_proveedor, numeric_monto, date_fecha_emision, int_id_cat_moneda, str_descripcion, int_id_cat_pais, int_estado_anulado, int_id_creador, int_cantidad, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor]);
+    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.post_documento_sat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40)', [int_id_cat_documento_tipo, int_id_cat_documento_estado, int_id_cat_empresa, int_dte, str_nit, str_proveedor, numeric_monto, date_fecha_emision, int_id_cat_moneda, str_descripcion, int_id_cat_pais, int_estado_anulado, int_id_creador, int_cantidad, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor, str_numero_autorizacion, str_tipo_dte, str_serie, int_codigo_establecimiento, str_nit_certificador, str_nombre_certificador, date_fecha_anulacion, numeric_iva, numeric_petroleo, numeric_turismo_hospedaje, numeric_turismo_pasajes, numeric_timbre_prensa, numeric_bomberos, numeric_tasa_municipal, numeric_bebidas_alcoholicas, numeric_tabaco, numeric_cemento, numeric_bebidas_no_alcoholicas, numeric_tarifa_portuaria, str_importacion_local]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
@@ -728,7 +748,7 @@ router.post('/Get_Documento_ConcilacionDocumento', async (req, res) => {
     WHERE Empresa.CLAVE = '${str_clave_empresa}' AND Cuenta.EMPRESA = '${str_cuenta_empresa}' AND Conta.VALOR_CARGO <> 0
     AND (Conta.CUENTA_CONTABLE NOT IN ('170505001', '130505001', '220505001', '1141'))
     AND (Cargo.TIPO_CGO_CXP IN ('FC', 'PQ', 'CC', 'FI', 'PA'))
-    AND Cargo.NUMERO_DOCTO = CAST(${str_numero_documento} AS NVARCHAR(MAX))
+    AND Cargo.NUMERO_DOCTO = CAST('${str_numero_documento}' AS VARCHAR(MAX))
     GROUP BY Conta.CUENTA_CONTABLE, Cuenta.NOMBRE, Conta.CENTRO_DE_COSTO, CentroCosto.DESCRIPCION, TRIM(Proveedor.N_I_T), Proveedor.NOMBRE_COMPLETO, Proveedor.NUMERO, Cargo.TIPO_CGO_CXP, Cargo.NUMERO_DOCTO, Cargo.valor_ext, Cargo.FECHA_DOCTO
     ORDER BY COUNT(Conta.CUENTA_CONTABLE) DESC, CUENTA_CONTABLE`);
     const data = result.recordset.map((row) => ({
@@ -745,6 +765,38 @@ router.post('/Get_Documento_ConcilacionDocumento', async (req, res) => {
       FECHA_DOCUMENTO: row.FECHA_DOCUMENTO,
     }));
     res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
+  }
+});
+
+router.put('/Put_Documento_FacturaSat', async (req, res) => {
+  try {
+    const {
+      int_dte,
+      str_numero_autorizacion,
+      str_tipo_dte,
+      str_serie,
+      int_codigo_establecimiento,
+      str_nit_certificador,
+      str_nombre_certificador,
+      date_fecha_anulacion,
+      numeric_iva,
+      numeric_petroleo,
+      numeric_turismo_hospedaje,
+      numeric_turismo_pasajes,
+      numeric_timbre_prensa,
+      numeric_bomberos,
+      numeric_tasa_municipal,
+      numeric_bebidas_alcoholicas,
+      numeric_tabaco,
+      numeric_cemento,
+      numeric_bebidas_no_alcoholicas,
+      numeric_tarifa_portuaria,
+      str_importacion_local,
+    } = req.body;
+    const response = await getConnGroupNova.query('SELECT recepciones_documento.put_documento_facturasat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)', [int_dte, str_numero_autorizacion, str_tipo_dte, str_serie, int_codigo_establecimiento, str_nit_certificador, str_nombre_certificador, date_fecha_anulacion, numeric_iva, numeric_petroleo, numeric_turismo_hospedaje, numeric_turismo_pasajes, numeric_timbre_prensa, numeric_bomberos, numeric_tasa_municipal, numeric_bebidas_alcoholicas, numeric_tabaco, numeric_cemento, numeric_bebidas_no_alcoholicas, numeric_tarifa_portuaria, str_importacion_local]);
+    res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
   }
