@@ -82,7 +82,7 @@ router.post('/Set_Subticket', async (req, res) => {
       int_creado_por,
       int_actualizado_por,
     } = req.body;
-    await getConnGroupNova.query('CALL nova_ticket.sp_set_subticket($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);', [str_resumen, str_descripcion, int_id_cat_equipo, int_id_estado_proceso, int_estado_resolucion, int_id_responsable, str_ref_ticket_padre, int_id_solicitante, int_id_cat_proceso, int_id_ticket_canal, int_id_ticket_prioridad, int_estado, int_creado_por, int_actualizado_por]);
+    await getConnGroupNova.query('SELECT * FROM nova_ticket.sp_set_subticket($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);', [str_resumen, str_descripcion, int_id_cat_equipo, int_id_estado_proceso, int_estado_resolucion, int_id_responsable, str_ref_ticket_padre, int_id_solicitante, int_id_cat_proceso, int_id_ticket_canal, int_id_ticket_prioridad, int_estado, int_creado_por, int_actualizado_por]);
 
     res.send('SubTicket creado correctamente');
   } catch (error) {
