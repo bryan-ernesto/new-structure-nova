@@ -384,21 +384,20 @@ router.post('/Get_Documento_DetalleFacturaSat', async (req, res) => {
     const {
       str_empresa,
       int_dte,
-      int_nit,
+      str_nit,
       str_proveedor,
       numeric_monto,
       int_id_moneda,
       str_descripcion,
       int_id_pais,
       int_estado,
-      int_cantidad,
       int_cuenta_contable_sugerida,
       int_centro_costo,
       str_nombre_cuenta_sugerida,
       int_codigo_proveedor,
       str_nombre_proveedor,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.get_documento_detallefacturasat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)', [str_empresa, int_dte, int_nit, str_proveedor, numeric_monto, int_id_moneda, str_descripcion, int_id_pais, int_estado, int_cantidad, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor]);
+    const response = await getConnGroupNova.query('SELECT * FROM recepciones_documento.get_documento_detallefacturasat($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)', [str_empresa, int_dte, str_nit, str_proveedor, numeric_monto, int_id_moneda, str_descripcion, int_id_pais, int_estado, int_cuenta_contable_sugerida, int_centro_costo, str_nombre_cuenta_sugerida, int_codigo_proveedor, str_nombre_proveedor]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });

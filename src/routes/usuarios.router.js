@@ -50,13 +50,14 @@ router.post('/Get_Puestos_Equipo', async (req, res) => {
 router.post('/Get_Equipos', async (req, res) => {
   try {
     const {
+      int_id_cat_equipo,
       str_equipo_nombre,
       int_id_cat_departamento,
       int_id_cat_empresa,
       int_creado_por,
       int_actualizado_por,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * from usuarios.get_equipos($1,$2,$3,$4,$5);', [str_equipo_nombre, int_id_cat_departamento, int_id_cat_empresa, int_creado_por, int_actualizado_por]);
+    const response = await getConnGroupNova.query('SELECT * from usuarios.get_equipos($1,$2,$3,$4,$5,$6);', [int_id_cat_equipo, str_equipo_nombre, int_id_cat_departamento, int_id_cat_empresa, int_creado_por, int_actualizado_por]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
