@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const { routerApi } = require('./routes/index');
-const AD = require('./routes/AD.router');
 
 const app = express();
 const PORT = 4000;
@@ -30,8 +29,6 @@ app.get('/api', (req, res) => {
 app.get('/nueva-ruta', (req, res) => {
   res.send('Nueva ruta');
 });
-
-app.post('/AD/Get_validate_status_user', cors(), validateIpAndHost, AD);
 
 routerApi(app);
 

@@ -38,12 +38,13 @@ router.post('/Put_Proceso', async (req, res) => {
 router.post('/Get_Proceso', async (req, res) => {
   try {
     const {
+      int_id_proceso,
       str_nombre_proceso,
       int_id_equipo,
       str_nombre_equipo,
       int_estado,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * from nova_proceso_tarea.get_proceso($1,$2,$3,$4);', [str_nombre_proceso, int_id_equipo, str_nombre_equipo, int_estado]);
+    const response = await getConnGroupNova.query('SELECT * from nova_proceso_tarea.get_proceso($1,$2,$3,$4,$5);', [int_id_proceso, str_nombre_proceso, int_id_equipo, str_nombre_equipo, int_estado]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });

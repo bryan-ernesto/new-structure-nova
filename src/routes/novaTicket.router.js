@@ -75,14 +75,13 @@ router.post('/Set_Subticket', async (req, res) => {
       int_id_responsable,
       str_ref_ticket_padre,
       int_id_solicitante,
-      int_id_cat_proceso,
       int_id_ticket_canal,
       int_id_ticket_prioridad,
       int_estado,
       int_creado_por,
       int_actualizado_por,
     } = req.body;
-    await getConnGroupNova.query('SELECT * FROM nova_ticket.sp_set_subticket($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);', [str_resumen, str_descripcion, int_id_cat_equipo, int_id_estado_proceso, int_estado_resolucion, int_id_responsable, str_ref_ticket_padre, int_id_solicitante, int_id_cat_proceso, int_id_ticket_canal, int_id_ticket_prioridad, int_estado, int_creado_por, int_actualizado_por]);
+    await getConnGroupNova.query('SELECT * FROM nova_ticket.sp_set_subticket($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);', [str_resumen, str_descripcion, int_id_cat_equipo, int_id_estado_proceso, int_estado_resolucion, int_id_responsable, str_ref_ticket_padre, int_id_solicitante, int_id_ticket_canal, int_id_ticket_prioridad, int_estado, int_creado_por, int_actualizado_por]);
 
     res.send('SubTicket creado correctamente');
   } catch (error) {
@@ -227,10 +226,20 @@ router.put('/Put_Ticket_Primario', async (req, res) => {
       int_id_cat_proceso,
       int_id_cat_ticket_canal,
       int_id_cat_ticket_prioridad,
+      numeric_sla_asignacion_min,
+      numeric_sla_resolucion_min,
+      numeric_sla_asignacion_min_real,
+      numeric_sla_resolucion_min_real,
+      numeric_sla_asignacion_min_real_duracion_dia_inicio,
+      numeric_sla_asignacion_min_real_duracion_dia_fin,
+      numeric_sla_asignacion_min_real_duracion_dias,
+      numeric_sla_resolucion_min_real_duracion_dia_inicio,
+      numeric_sla_resolucion_min_real_duracion_dia_fin,
+      numeric_sla_resolucion_min_real_duracion_dias,
       int_estado,
       int_actualizado_por,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_detalleaccion($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21);', [int_id_bit_ticket, int_id_cat_ticket_tipo, str_referencia, str_resumen, str_descripcion, int_id_cat_equipo, int_id_cat_ticket_estado_proceso, int_id_cat_ticket_estado_resolucion, str_referencia_ticket_padre, str_fecha_asignacion, str_fecha_resolucion, str_fecha_ultima_vista, str_fecha_primera_respuesta, str_fecha_vencimiento, int_usuario_responsable, int_usuario_solicitante, int_id_cat_proceso, int_id_cat_ticket_canal, int_id_cat_ticket_prioridad, int_estado, int_actualizado_por]);
+    const response = await getConnGroupNova.query('SELECT * from nova_ticket.put_ticket_primario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31);', [int_id_bit_ticket, int_id_cat_ticket_tipo, str_referencia, str_resumen, str_descripcion, int_id_cat_equipo, int_id_cat_ticket_estado_proceso, int_id_cat_ticket_estado_resolucion, str_referencia_ticket_padre, str_fecha_asignacion, str_fecha_resolucion, str_fecha_ultima_vista, str_fecha_primera_respuesta, str_fecha_vencimiento, int_usuario_responsable, int_usuario_solicitante, int_id_cat_proceso, int_id_cat_ticket_canal, int_id_cat_ticket_prioridad, numeric_sla_asignacion_min, numeric_sla_resolucion_min, numeric_sla_asignacion_min_real, numeric_sla_resolucion_min_real, numeric_sla_asignacion_min_real_duracion_dia_inicio, numeric_sla_asignacion_min_real_duracion_dia_fin, numeric_sla_asignacion_min_real_duracion_dias, numeric_sla_resolucion_min_real_duracion_dia_inicio, numeric_sla_resolucion_min_real_duracion_dia_fin, numeric_sla_resolucion_min_real_duracion_dias, int_estado, int_actualizado_por]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });
