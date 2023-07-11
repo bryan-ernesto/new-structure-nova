@@ -544,7 +544,7 @@ router.put('/Put_Usuario', async (req, res) => {
       int_estado,
       int_actualizado_por,
     } = req.body;
-    const response = await getConnGroupNova.query('SELECT usuarios.put_usuario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)', [int_id_cat_usuario, str_nombre, str_id_ad, str_correo, str_user_principal_name, int_telefono, int_codigo_pais, int_id_cat_usuario_dominio, int_tipo_usuario, int_id_cat_usuario_categoria, str_username, int_responsable, int_estado, int_actualizado_por]);
+    const response = await getConnGroupNova.query('SELECT usuarios.put_usuario($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)', [int_id_cat_usuario, str_nombre, str_id_ad, str_correo, str_user_principal_name, int_telefono, int_codigo_pais, int_id_cat_usuario_dominio, int_tipo_usuario, int_id_cat_usuario_categoria, str_username, int_responsable, int_estado, int_actualizado_por]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: `La información ingresada es incorrecta. ${error.message}` });

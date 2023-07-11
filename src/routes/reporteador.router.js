@@ -81,8 +81,32 @@ router.get('/Get_Reporte_Tickets', async (req, res) => {
       int_id_equipo,
       int_id_departamento,
       int_id_empresa,
+      string_nombre_referencia,
+      int_id_prioridad,
+      int_estado_resolucion,
+      int_id_proceso,
+      int_id_cat_tipo,
+      int_id_cat_canal,
+      int_id_cat_seguimiento,
+      int_id_cat_responsable,
+      int_id_cat_solicitante,
+      int_id_cat_creado_por,
+      date_asignacion_inicio,
+      date_asignacion_fin,
+      date_resolucion_inicio,
+      date_resolucion_fin,
+      date_ultima_vista_inicio,
+      date_ultima_vista_fin,
+      date_vencimiento_inicio,
+      date_vencimiento_fin,
+      date_primera_respuesta_inicio,
+      date_primera_respuesta_fin,
+      date_creacion_inicio,
+      date_creacion_fin,
+      date_actualizacion_inicio,
+      date_actualizacion_fin,
     } = req.query;
-    const response = await getConnGroupNova.query('SELECT * from reporteador.get_reporte_tickets($1,$2,$3);', [int_id_equipo, int_id_departamento, int_id_empresa]);
+    const response = await getConnGroupNova.query('SELECT * from reporteador.get_reporte_tickets($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27);', [int_id_equipo, int_id_departamento, int_id_empresa, string_nombre_referencia, int_id_prioridad, int_estado_resolucion, int_id_proceso, int_id_cat_tipo, int_id_cat_canal, int_id_cat_seguimiento, int_id_cat_responsable, int_id_cat_solicitante, int_id_cat_creado_por, date_asignacion_inicio, date_asignacion_fin, date_resolucion_inicio, date_resolucion_fin, date_ultima_vista_inicio, date_ultima_vista_fin, date_vencimiento_inicio, date_vencimiento_fin, date_primera_respuesta_inicio, date_primera_respuesta_fin, date_creacion_inicio, date_creacion_fin, date_actualizacion_inicio, date_actualizacion_fin]);
     res.status(200).json(response.rows);
   } catch (error) {
     res.status(400).json({ error: error.message });
